@@ -33,7 +33,7 @@ Before running the application, ensure you have the following installed:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/web-map-dashboard.git
+   git clone https://github.com/martinchez/stampede-inspections.git
    cd web-map-dashboard
 
 # Getting Started with Create React App Library not installed yet
