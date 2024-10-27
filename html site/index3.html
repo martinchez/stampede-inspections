@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Web Map Dashboard</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://rawgit.com/rowanwins/leaflet-easyPrint/gh-pages/dist/bundle.js"></script>
+</head>
+
+<style>
+    /* General Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    header {
+        background-color: #333;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+    }
+
+    .logo {
+        height: 50px;
+        margin-right: 10px;
+    }
+
+    .nav-right .profile-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+    main {
+        display: flex;
+        flex-grow: 1;
+        padding: 20px;
+    }
+
+    .map-container {
+        width: 70%;
+        margin-right: 20px;
+    }
+
+    #map {
+        width: 100%;
+        height: 70vh;
+        background-color: #e0e0e0;
+    }
+
+    .sidebar {
+        background-color: #E0E0E0;
+        padding: 20px;
+        width: 300px;
+        border-radius: 8px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .basemap-selection {
+        margin-bottom: 15px;
+    }
+
+    .basemap-option {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        cursor: pointer;
+    }
+
+    .basemap-option img {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+        border-radius: 4px;
+        border: 2px solid transparent;
+    }
+
+    .basemap-option.active img {
+        border-color: #007BFF;
+    }
+
+    .category {
+        margin-bottom: 15px;
+    }
+
+    .category-title {
+        font-size: 16px;
+        cursor: pointer;
+        padding: 8px;
+        background-color: #C0C0C0;
+        border-radius: 4px;
+    }
+
+    .category-title:hover {
+        color: #007BFF;
+    }
+
+    #export-btn {
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px;
+        width: 100%;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    #export-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<body>
+    <header>
+        <div class="nav-left">
+            <img src="logo.png" alt="Company Logo" class="logo">
+        </div>
+        <div class="nav-right">
+            <img src="logo.png" alt="Profile" class="profile-icon">
+        </div>
+    </header>
+
+    <main>
+        <div class="map-container">
+            <div class="controls" id="control-panel">
+                <!-- This will update dynamically based on sidebar selection -->
+            </div>
+            <div id="map"></div>
+        </div>
+
+        <div class="sidebar">
+
+            <div class="category">
+                <h3 class="category-title">Administrative Units</h3>
+                <div class="subcategory">
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="countries"> Countries</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="counties" data-color="#ff7000">
+                        Counties</label>
+
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">Hydrology</h3>
+                <div class="subcategory">
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="rivers"> Rivers</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="dams"> Dams</label>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">Land Use</h3>
+                <div class="subcategory">
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="landuse"> Land Use</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="forests"> Forest Cover</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="imagery"> imagery</label>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">Populated Places</h3>
+                <div class="subcategory">
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="hospitals"> Hospitals</label>
+                </div>
+            </div>
+            <div class="basemap-selection">
+                <h3>Select Basemap</h3>
+                <div class="basemap-option" data-basemap="osm">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Openstreetmap_logo.svg" alt="OSM">
+                    OpenStreetMap
+                </div>
+                <div class="basemap-option" data-basemap="satellite">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/Landsat_logo.svg" alt="Satellite">
+                    Satellite
+                </div>
+                <div class="basemap-option" data-basemap="topo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Map_icon.svg" alt="Topographic">
+                    Topographic
+                </div>
+            </div>
+
+            <button id="export-btn">Export Map</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Your Company. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Initialize Leaflet map
+        const map = L.map('map').setView([0.515, 37.568], 7);
+
+        // Define basemaps
+        const basemaps = {
+            osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap contributors'
+            }),
+            satellite: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                maxZoom: 17,
+                attribution: '© OpenTopoMap'
+            }),
+            topo: L.tileLayer('https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=YOUR_API_KEY', {
+                maxZoom: 22,
+                attribution: '© Thunderforest'
+            })
+        };
+        // Set default basemap
+        basemaps.osm.addTo(map);
+
+        // Basemap selection logic
+        document.querySelectorAll('.basemap-option').forEach(option => {
+            option.addEventListener('click', function () {
+                document.querySelectorAll('.basemap-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+
+                const selectedBasemap = basemaps[this.dataset.basemap];
+                map.eachLayer(layer => map.removeLayer(layer));
+                selectedBasemap.addTo(map);
+            });
+        });
+        // Define WMS layers
+        const layers = {
+            counties: L.tileLayer.wms('http://iggresserver.dkut.ac.ke:8080/geoserver/ne/wms?', {
+                layers: 'ne:counties',
+                format: 'image/png',
+                transparent: true,
+            }),
+            countries: L.tileLayer.wms('http://iggresserver.dkut.ac.ke:8080/geoserver/ne/wms?', {
+                layers: 'ne:countries',
+                format: 'image/png',
+                transparent: true,
+            }),
+            subcounties: L.tileLayer.wms('http://iggresserver.dkut.ac.ke:8080/geoserver/ne/wms?', {
+                layers: 'ne:subcounties',
+                format: 'image/png',
+                transparent: true,
+            }),
+            rivers: L.geoJSON(null, { style: { color: 'blue', weight: 2 } }),
+            dams: L.geoJSON(null, { style: { color: 'black', weight: 2 } }),
+            landuse: L.tileLayer.wms('http://iggresserver.dkut.ac.ke:8080/geoserver/ne/wms?', {
+                layers: 'ne:landuse',
+                format: 'image/png',
+                transparent: true,
+            }),
+            imagery: L.tileLayer.wms('http://iggresserver.dkut.ac.ke:8080/geoserver/nurc/wms?', {
+                layers: 'nurc:mosaic',
+                format: 'image/png',
+                transparent: true,
+            }),
+            forests: L.tileLayer.wms('http://iggresserver.dkut.ac.ke:8080/geoserver/ne/wms?', {
+                layers: 'ne:forests',
+                format: 'image/png',
+                transparent: true,
+            }),
+            hospitals: L.tileLayer.wms('http://iggresserver.dkut.ac.ke:8080/geoserver/SDI/wms?', {
+                layers: 'SDI:kenya_health',
+                format: 'image/png',
+                transparent: true,
+            })
+        };
+
+        // WFS URLs
+        const wfsUrls = {
+            rivers: 'http://iggresserver.dkut.ac.ke:8080/geoserver/sf/wms?service=WMS&version=1.1.0&request=GetMap&layers=sf%3Astreams&bbox=589434.4971235897%2C4913947.342298816%2C609518.2117427464%2C4928071.049965891&width=768&height=540&srs=EPSG%3A26713&styles=&format=application/openlayers',
+            dams: 'http://iggresserver.dkut.ac.ke:8080/geoserver/ne/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ne:dams&outputFormat=application/json'
+        };
+
+        // Load WFS layers
+        function loadWFS(url, layer) {
+            fetch(url)
+                .then(res => res.json())
+                .then(data => layer.addData(data))
+                .catch(err => console.error(err));
+        }
+
+        // Checkbox event handling
+        document.querySelectorAll('.layer-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const layer = layers[this.dataset.layer];
+                if (this.checked) {
+                    if (this.dataset.layer === 'rivers' || this.dataset.layer === 'dams') {
+                        loadWFS(wfsUrls[this.dataset.layer], layer);
+                    }
+                    layer.addTo(map);
+                } else {
+                    map.removeLayer(layer);
+                }
+            });
+        });
+
+        // Initialize leaflet-easyPrint plugin
+        const printer = L.easyPrint({
+            title: 'Export Map',
+            position: 'topright',
+            exportOnly: true,
+            filename: 'LeafletMapExport'
+        }).addTo(map);
+
+        // Trigger export on button click
+        document.getElementById('export-btn').addEventListener('click', function () {
+            printer.printMap('CurrentSize', 'LeafletMapExport');
+        });
+    </script>
+</body>
+
+</html>
