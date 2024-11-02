@@ -149,35 +149,87 @@
             <div class="category">
                 <h3 class="category-title">Administrative Units</h3>
                 <div class="subcategory">
-                    <label><input type="checkbox" class="layer-checkbox" data-layer="countries"> Countries</label>
-                    <label><input type="checkbox" class="layer-checkbox" data-layer="counties" data-color="#ff7000">
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="Aokzip"> Digit Zip code</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="okcities">Cities and Towns</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="citywards"> City Wards</label>
+                    <label><input type="checkbox" class="layer-checkbox"
+                            data-layer="conservation_district_offices">conservation district offices</label>
+                    <label> <input type="checkbox" class="layer-checkbox" data-layer="cons_dis_4326">Conservation
+                        Districts</label>
+                    <label><input type="checkbox" class="layer-checkbox"
+                            data-layer="ok_county_commissioners_2010">County commissioner 2010</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="ok_cnty_commissioner_2020">County
+                        commissioner 2020</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="fire">Fire Protection
+                        Districts</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="okmunbdy">Municipal Boundaries -
+                        CSA</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="okmuniwards">Municipal
+                        Wards</label>
+                    <label><input type="checkbox" class="layer-checkbox"
+                            data-layer="tabblock2010_40_pophu_4326">Oklahoma Census Block 2010</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="censusblks2020">Oklahoma Census
+                        Block 2020</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="okcounties">Oklahoma
                         Counties</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="firestations">Oklahoma Fire
+                        Stations</label>
+                    <label><input type="checkbox" class="layer-checkbox"
+                            data-layer="ok_disadv_centracts2010_just40_allfields_ll84">Disadvantaged</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="rws">Rural water systems
+                        Boundaries</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="ok_tribal_hdqt_2010">Triabl Head
+                        Quaters</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="ok_tribal_areas_4326">Triabal
+                        Jurisdictional Areas</label>
+                </div>
+            </div>
+            <div class="category">
+                <h3 class="category-title">Education</h3>
+                <div class="subcategory">bt_creek_list_2024
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="bt_creek_list_2024"> Blue Thumb
+                        Fish</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="ca_tech"> Career Technology
+                        Districs</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="ok_he_geo_2019_4326"> Ok Higher
+                        Education institutions</label>
+                    <label><input type="checkbox" class="layer-checkbox"
+                            data-layer="school_sites_2014_2015_4326">Publick Schools 2014-2015 </label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="okprivateschools"> Private schools
+                        2007-2008</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="sdwards_2010"> School District
+                        Wards </label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="ok_std">School Transportation
+                        Districts </label>
 
                 </div>
             </div>
-
             <div class="category">
                 <h3 class="category-title">Hydrology</h3>
                 <div class="subcategory">
-                    <label><input type="checkbox" class="layer-checkbox" data-layer="rivers"> Rivers</label>
-                    <label><input type="checkbox" class="layer-checkbox" data-layer="dams"> Dams</label>
-                    <label><input type="checkbox" class="layer-checkbox" data-layer="countiesokla"> countiesokla</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="wbdhu12_2014_4326"> HUC12</label>
                 </div>
             </div>
 
             <div class="category">
-                <h3 class="category-title">Land Use</h3>
+                <h3 class="category-title">Land Grids</h3>
                 <div class="subcategory">
-                    <label><input type="checkbox" class="layer-checkbox" data-layer="landuse"> Land Use</label>
-                    <label><input type="checkbox" class="layer-checkbox" data-layer="forests"> Forest Cover</label>
-                    <label><input type="checkbox" class="layer-checkbox" data-layer="imagery"> imagery</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="twprng">Township</label>
                 </div>
             </div>
 
             <div class="category">
-                <h3 class="category-title">Populated Places</h3>
+                <h3 class="category-title">Land Percels</h3>
                 <div class="subcategory">
-                    <label><input type="checkbox" class="layer-checkbox" data-layer="hospitals"> Hospitals</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="Statewide_Parcels"> Statewide
+                        Parcels</label>
+                </div>
+            </div>
+            <div class="category">
+                <h3 class="category-title">Lidar Elevation Data</h3>
+                <div class="subcategory">
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="OK_DEM_Bare_Earth_LG"> Bare Earth
+                        Data</label>
                 </div>
             </div>
             <div class="basemap-selection">
@@ -239,53 +291,196 @@
         });
         // Define WMS layers
         const layers = {
-            // https://okmaps.org/geoserver/wms?VERSION=1.1.1&REQUEST=GetMap&SERVICE=WMS&LAYERS=ogi:okcounties,ogi:okcities&SRS=EPSG:4326&BBOX=-104.5005,32.7501,-94.01,37.20&WIDTH=800&HEIGHT=300&FORMAT=image/png&STYLES=&TRANSPARENT=TRUE
-            counties: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
-                layers: 'ogi:okcounties', 
-                // layers: 'ogi: okcities', 
+            // ***** administratuve units *****
+            // 1. 5 - Digit ZIP Code Tabulation Area(ZCTA5)
+            Aokzip: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: ' ogi:Aokzip',
                 format: 'image/png',
                 transparent: true,
             }),
-            countries: L.tileLayer.wms('http://iggresserver.dkut.ac.ke:8080/geoserver/ne/wms?', {
-                layers: 'ne:countries',
+            // 2. Cities and Towns
+            okcities: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:okcities',
                 format: 'image/png',
                 transparent: true,
             }),
-            subcounties: L.tileLayer.wms('http://iggresserver.dkut.ac.ke:8080/geoserver/ne/wms?', {
-                layers: 'ne:subcounties',
+            // 3.City Wards
+            citywards: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:citywards',
                 format: 'image/png',
                 transparent: true,
             }),
-            rivers: L.geoJSON(null, { style: { color: 'blue', weight: 2 } }),
-            dams: L.geoJSON(null, { style: { color: 'black', weight: 2 } }),
-            countiesokla: L.geoJSON(null, { style: { color: 'green', weight: 2 } }),
-            landuse: L.tileLayer.wms('http://iggresserver.dkut.ac.ke:8080/geoserver/ne/wms?', {
-                layers: 'ne:landuse',
+            // 4.Conservation District Offices
+            conservation_district_offices: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:conservation_district_offices',
                 format: 'image/png',
                 transparent: true,
             }),
-            imagery: L.tileLayer.wms('http://iggresserver.dkut.ac.ke:8080/geoserver/nurc/wms?', {
-                layers: 'nurc:mosaic',
+            // 5. Conservation Districts
+            cons_dis_4326: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:cons_dis_4326',
                 format: 'image/png',
                 transparent: true,
             }),
-            forests: L.tileLayer.wms('http://iggresserver.dkut.ac.ke:8080/geoserver/ne/wms?', {
-                layers: 'ne:forests',
+            // 6.County Commisioner Districs 2010
+            ok_county_commissioners_2010: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:ok_county_commissioners_2010',
                 format: 'image/png',
                 transparent: true,
             }),
-            hospitals: L.tileLayer.wms('http://iggresserver.dkut.ac.ke:8080/geoserver/SDI/wms?', {
-                layers: 'SDI:kenya_health',
+            // 7.County Commisioner Districs 2020
+            ok_cnty_commissioner_2020: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:ok_cnty_commissioner_2020',
                 format: 'image/png',
                 transparent: true,
-            })
+            }),
+            // 8.Fire Protection Districts
+            fire: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:fire',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 9.Municipal Boundaries -CSA
+            okmunbdy: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:okmunbdy',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 10.Municipal Wards
+            okmuniwards: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:okmuniwards',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 11. Oklahoma Census Block 2010
+            tabblock2010_40_pophu_4326: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:tabblock2010_40_pophu_4326',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 12. Oklahoma Census Blocks 2020
+            censusblks2020: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:censusblks2020',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 13.Oklahoma Counties
+            okcounties: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:okcounties',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 14.Oklahoma Fire Stations
+            firestations: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:firestations',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 15.Oklahoma Justice 40 Disadvantaged Census Tracts 2010
+            ok_disadv_centracts2010_just40_allfields_ll84: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:ok_disadv_centracts2010_just40_allfields_ll84',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 16. Rural Water Systems Boundaries
+            rws: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:rws',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 17.Tribal Headquaters
+            ok_tribal_hdqt_2010: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:ok_tribal_hdqt_2010',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 18.Tribal Jurisdictional Areas
+            ok_tribal_areas_4326: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:ok_tribal_areas_4326',
+                format: 'image/png',
+                transparent: true,
+            }),
+
+            // ***************************************************************************Section 2 Education
+            // 1.Blue Thumb Fish
+            bt_creek_list_2024: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:bt_creek_list_2024',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 2.Career Technology Districts
+            ca_tech: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:ca_tech',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 3.Ok Higher Education Institutions
+            ok_he_geo_2019_4326: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:ok_he_geo_2019_4326',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 4.Ok Public Schools 2014-2015
+            school_sites_2014_2015_4326: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:school_sites_2014-2015_4326',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 5.Private Schools 2007 -2008
+            okprivateschools: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:okprivateschools',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 6.School District Wards
+            sdwards_2010: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:sdwards_2010',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 7.School Districts
+            schoold: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:schoold',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // 8.School Transportation Districts
+            ok_std: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:ok_std',
+                format: 'image/png',
+                transparent: true,
+            }),
+
+            //Hydrology 
+            // 1.HUC12 Watershed Boundary
+            wbdhu12_2014_4326: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:wbdhu10_2014_4326',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // Land Grids
+            // 1. Township/Range
+            twprng: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:twprng',
+                format: 'image/png',
+                transparent: true,
+            }),
+            // Land Parcels
+            // 1.Statewide Parcels
+            Statewide_Parcels: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi_wms:Statewide_Parcels',
+                format: 'image/png',
+                transparent: true,
+            }),
+            //  Lidar Elevation Data
+            // 1. Oklahoma Bare Earth Contours 
+            OK_DEM_Bare_Earth_LG: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi_lidar:OK_DEM_Bare_Earth_LG',
+                format: 'image/png',
+                transparent: true,
+            }),
         };
 
-        // WFS URLs
-        const wfsUrls = {
-            rivers: 'http://iggresserver.dkut.ac.ke:8080/geoserver/sf/wms?service=WMS&version=1.1.0&request=GetMap&layers=sf%3Astreams&bbox=589434.4971235897%2C4913947.342298816%2C609518.2117427464%2C4928071.049965891&width=768&height=540&srs=EPSG%3A26713&styles=&format=application/openlayers',
-            dams: 'http://iggresserver.dkut.ac.ke:8080/geoserver/ne/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ne:dams&outputFormat=application/json'
-        };
 
         // Load WFS layers
         function loadWFS(url, layer) {
