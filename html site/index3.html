@@ -161,6 +161,7 @@
                 <div class="subcategory">
                     <label><input type="checkbox" class="layer-checkbox" data-layer="rivers"> Rivers</label>
                     <label><input type="checkbox" class="layer-checkbox" data-layer="dams"> Dams</label>
+                    <label><input type="checkbox" class="layer-checkbox" data-layer="countiesokla"> countiesokla</label>
                 </div>
             </div>
 
@@ -205,7 +206,7 @@
 
     <script>
         // Initialize Leaflet map
-        const map = L.map('map').setView([0.515, 37.568], 7);
+        const map = L.map('map').setView([35.4676, -97.5164], 7);
 
         // Define basemaps
         const basemaps = {
@@ -238,8 +239,10 @@
         });
         // Define WMS layers
         const layers = {
-            counties: L.tileLayer.wms('http://iggresserver.dkut.ac.ke:8080/geoserver/ne/wms?', {
-                layers: 'ne:counties',
+            // https://okmaps.org/geoserver/wms?VERSION=1.1.1&REQUEST=GetMap&SERVICE=WMS&LAYERS=ogi:okcounties,ogi:okcities&SRS=EPSG:4326&BBOX=-104.5005,32.7501,-94.01,37.20&WIDTH=800&HEIGHT=300&FORMAT=image/png&STYLES=&TRANSPARENT=TRUE
+            counties: L.tileLayer.wms('https://okmaps.org/geoserver/wms?', {
+                layers: 'ogi:okcounties', 
+                // layers: 'ogi: okcities', 
                 format: 'image/png',
                 transparent: true,
             }),
@@ -255,6 +258,7 @@
             }),
             rivers: L.geoJSON(null, { style: { color: 'blue', weight: 2 } }),
             dams: L.geoJSON(null, { style: { color: 'black', weight: 2 } }),
+            countiesokla: L.geoJSON(null, { style: { color: 'green', weight: 2 } }),
             landuse: L.tileLayer.wms('http://iggresserver.dkut.ac.ke:8080/geoserver/ne/wms?', {
                 layers: 'ne:landuse',
                 format: 'image/png',
